@@ -60,8 +60,7 @@ const startGame = () => {
   if (state.isPlaying) {
     return;
   }
-
-  title.innerText = `Level ${state.level}`;
+  updateTitle(`Level ${state.level}`);
   state.isPlaying = true;
   showCurrentPlay();
 };
