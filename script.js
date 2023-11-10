@@ -7,6 +7,7 @@ const state = {
   isPlaying: false,
   choosenBtn: null,
   sequence: [],
+  currentCheck: 0,
 };
 
 const resetState = () => {
@@ -14,10 +15,24 @@ const resetState = () => {
   state.isPlaying = false;
   state.choosenBtn = null;
   state.sequence = [];
+  state.currentCheck = 0;
 };
 
 const updateTitle = (newTitle) => {
   title.innerText = newTitle;
+};
+
+const currentPlay = () => {
+  const curr = Math.floor((Math.random() * 10) % 4);
+  state.sequence.push(curr);
+  return curr;
+};
+
+const gameOver = () => {
+  updateTitle(
+    `Game Over, You lost in level ${state.level} !! Press any key to start again`
+  );
+  resetState();
 };
 
 const showCurrentPlay = () => {
@@ -30,20 +45,30 @@ const showCurrentPlay = () => {
   }, 1000);
 };
 
+const isCorrect = (event) => {
+  return event.target === btns[state.sequence[state.currentCheck]];
+};
+
 const checkAnswer = (event) => {
   if (!state.isPlaying) {
     return;
   }
 
-  if (state.choosenBtn === event.target) {
-    state.level++;
-    updateTitle(`Level ${state.level}`);
-    showCurrentPlay();
+  if (state.currentCheck == state.sequence.length - 1) {
+    if (!isCorrect(event)) {
+      gameOver();
+    } else {
+      state.level++;
+      updateTitle(`Level ${state.level}`);
+      showCurrentPlay();
+    }
+    state.currentCheck = 0;
   } else {
-    updateTitle(
-      `Game Over, You lost in level ${state.level} !! Press any key to start again`
-    );
-    resetState();
+    if (!isCorrect(event)) {
+      gameOver();
+    } else {
+      state.currentCheck += 1;
+    }
   }
 };
 
@@ -55,12 +80,6 @@ const startGame = () => {
   updateTitle(`Level ${state.level}`);
   state.isPlaying = true;
   showCurrentPlay();
-};
-
-const currentPlay = () => {
-  const curr = Math.floor((Math.random() * 10) % 4);
-  state.sequence.push(curr);
-  return curr;
 };
 
 // Listen to any key
