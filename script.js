@@ -12,6 +12,7 @@ const state = {
 const resetState = () => {
   state.level = 0;
   state.isPlaying = false;
+  state.choosenBtn = null;
   state.sequence = [];
 };
 
@@ -35,8 +36,6 @@ const checkAnswer = (event) => {
     return;
   }
 
-  console.log("event:", event.target);
-
   if (state.choosenBtn === event.target) {
     state.level++;
     title.innerText = `Level ${state.level}`;
@@ -51,8 +50,6 @@ btns.forEach((btn) => {
   btn.addEventListener("click", checkAnswer);
 });
 
-// btns.
-
 const startGame = () => {
   if (state.isPlaying) {
     return;
@@ -64,17 +61,15 @@ const startGame = () => {
   game();
 };
 
-// Listen to any key
-document.addEventListener("keypress", startGame);
-
 const currentPlay = () => {
   const curr = Math.floor((Math.random() * 10) % 4);
   state.sequence.push(curr);
   return curr;
 };
 
-// console.log(curr, choosenBtn);
-
 const game = () => {
   showCurrentPlay();
 };
+
+// Listen to any key
+document.addEventListener("keypress", startGame);
