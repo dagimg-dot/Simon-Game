@@ -10,7 +10,7 @@ const state = {
 };
 
 const resetState = () => {
-  state.level = 0;
+  state.level = 1;
   state.isPlaying = false;
   state.choosenBtn = null;
   state.sequence = [];
