@@ -58,17 +58,13 @@ const startGame = () => {
   state.level += 1;
   title.innerText = `Level ${state.level}`;
   state.isPlaying = true;
-  game();
+  showCurrentPlay();
 };
 
 const currentPlay = () => {
   const curr = Math.floor((Math.random() * 10) % 4);
   state.sequence.push(curr);
   return curr;
-};
-
-const game = () => {
-  showCurrentPlay();
 };
 
 // Listen to any key
