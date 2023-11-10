@@ -20,15 +20,10 @@ const updateTitle = (newTitle) => {
   title.innerText = newTitle;
 };
 
-const newPlay = () => {
+const showCurrentPlay = () => {
   const curr = currentPlay();
   const choosenBtn = btns[curr];
   state.choosenBtn = choosenBtn;
-};
-
-const showCurrentPlay = () => {
-  newPlay();
-  const choosenBtn = state.choosenBtn;
   choosenBtn.classList.add("pressed");
   setTimeout(() => {
     choosenBtn.classList.remove("pressed");
@@ -52,14 +47,11 @@ const checkAnswer = (event) => {
   }
 };
 
-btns.forEach((btn) => {
-  btn.addEventListener("click", checkAnswer);
-});
-
 const startGame = () => {
   if (state.isPlaying) {
     return;
   }
+
   updateTitle(`Level ${state.level}`);
   state.isPlaying = true;
   showCurrentPlay();
@@ -73,3 +65,8 @@ const currentPlay = () => {
 
 // Listen to any key
 document.addEventListener("keypress", startGame);
+
+// Listen click on the Color buttons
+btns.forEach((btn) => {
+  btn.addEventListener("click", checkAnswer);
+});
