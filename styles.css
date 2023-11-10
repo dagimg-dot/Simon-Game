@@ -52,3 +52,7 @@ body {
   background-color: grey;
   animation: all 0.3s;
 }
+
+.clicked {
+  box-shadow: 0 0 20px white;
+}
