@@ -5,7 +5,6 @@ const btns = Array.from(document.querySelectorAll(".btn"));
 const state = {
   level: 1,
   isPlaying: false,
-  choosenBtn: null,
   sequence: [],
   currentCheck: 0,
 };
@@ -13,7 +12,6 @@ const state = {
 const resetState = () => {
   state.level = 1;
   state.isPlaying = false;
-  state.choosenBtn = null;
   state.sequence = [];
   state.currentCheck = 0;
 };
@@ -35,14 +33,21 @@ const gameOver = () => {
   resetState();
 };
 
+const applyAnimation = (element = null, event = null, className, duration) => {
+  if (event != null) {
+    element = event.target;
+  }
+
+  element.classList.add(className);
+  setTimeout(() => {
+    element.classList.remove(className);
+  }, duration);
+};
+
 const showCurrentPlay = () => {
   const curr = currentPlay();
   const choosenBtn = btns[curr];
-  state.choosenBtn = choosenBtn;
-  choosenBtn.classList.add("pressed");
-  setTimeout(() => {
-    choosenBtn.classList.remove("pressed");
-  }, 1000);
+  applyAnimation(choosenBtn, null, "pressed", 1000);
 };
 
 const isCorrect = (event) => {
@@ -53,6 +58,8 @@ const checkAnswer = (event) => {
   if (!state.isPlaying) {
     return;
   }
+  
+  applyAnimation(null, event, "clicked", 100);
 
   if (state.currentCheck == state.sequence.length - 1) {
     if (!isCorrect(event)) {
