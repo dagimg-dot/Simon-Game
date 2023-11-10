@@ -3,7 +3,7 @@ const title = document.getElementById("level-title");
 const btns = Array.from(document.querySelectorAll(".btn"));
 
 const state = {
-  level: 0,
+  level: 1,
   isPlaying: false,
   choosenBtn: null,
   sequence: [],
@@ -14,6 +14,10 @@ const resetState = () => {
   state.isPlaying = false;
   state.choosenBtn = null;
   state.sequence = [];
+};
+
+const updateTitle = (newTitle) => {
+  title.innerText = newTitle;
 };
 
 const newPlay = () => {
@@ -38,10 +42,12 @@ const checkAnswer = (event) => {
 
   if (state.choosenBtn === event.target) {
     state.level++;
-    title.innerText = `Level ${state.level}`;
+    updateTitle(`Level ${state.level}`);
     showCurrentPlay();
   } else {
-    title.innerText = `Game Over, You lost in level ${state.level} !! Press any key to start again`;
+    updateTitle(
+      `Game Over, You lost in level ${state.level} !! Press any key to start again`
+    );
     resetState();
   }
 };
@@ -55,7 +61,6 @@ const startGame = () => {
     return;
   }
 
-  state.level += 1;
   title.innerText = `Level ${state.level}`;
   state.isPlaying = true;
   showCurrentPlay();
